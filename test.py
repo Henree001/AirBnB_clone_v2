@@ -37,7 +37,6 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
-
         Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
         (Brackets denote optional fields in usage example.)
         """
@@ -118,27 +117,13 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        args_list = args.split(' ')
-        if args_list[0] not in HBNBCommand.classes:
+        elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = eval('{}()'.format(args_list[0]))
-        for arguments in args_list:
-            if '=' not in arguments:
-                continue
-            attr = arguments.split('=')
-            try:
-                if '"' in attr[1]:
-                    attr[1] = attr[1].replace('_', ' ').strip('\"')
-                    new_instance.__dict__[attr[0]] = str(attr[1])
-                if '.' in attr[1]:
-                    setattr(new_instance, attr[0], float(attr[1]))
-                else:
-                    setattr(new_instance, attr[0], int(attr[1]))
-            except (IndexError, ValueError, SyntaxError):
-                continue
-        new_instance.save()
+        new_instance = HBNBCommand.classes[args]()
+        storage.save()
         print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -220,12 +205,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage.all().items():
-                k = k.split('.')
-                if k[0] == args:
+            for k, v in storage._FileStorage__objects.items():
+                if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage.all().items():
+            for k, v in storage._FileStorage__objects.items():
                 print_list.append(str(v))
 
         print(print_list)
