@@ -34,6 +34,9 @@ class Place(BaseModel, Base):
                                  ForeignKey('amenities.id'),
                                  primary_key=True,
                                  nullable=False))
+	amenities = relationship("Amenity",
+                                 secondary="place_amenity",
+                                 viewonly=False)
     if getenv("HBNB_TYPE_STORAGE", None) != "db":
         @property
         def amenities(self):
@@ -53,7 +56,3 @@ class Place(BaseModel, Base):
             """Reviews getter for class attribute reviews"""
             reviews = models.storage.all(models.Review)
             return [c for c in reviews.values() if c.place_id == self.id]
-    """else:
-		amenities = relationship("Amenity",
-                                 secondary="place_amenity",
-                                 viewonly=False)"""
