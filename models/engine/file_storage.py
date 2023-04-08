@@ -29,6 +29,7 @@ class FileStorage:
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
+            print(temp)
             json.dump(temp, f)
 
     def reload(self):
@@ -62,7 +63,7 @@ class FileStorage:
         key = "{}.{}".format(type(obj).__name__, obj.id)
         if key in self.__objects.keys():
             del self.__objects[key]
-   
+
     def close(self):
         """method for deserializing the JSON file to objects"""
         self.reload()
