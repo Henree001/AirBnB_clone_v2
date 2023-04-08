@@ -5,17 +5,6 @@ from sqlalchemy import String, Column, ForeignKey, Float, Integer, Table
 from sqlalchemy.orm import relationship
 from os import getenv
 from models.amenity import Amenity
-place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id',
-                                 String(60),
-                                 ForeignKey('places.id'),
-                                 primary_key=True,
-                                 nullable=False),
-                          Column('amenity_id',
-                                 String(60),
-                                 ForeignKey('amenities.id'),
-                                 primary_key=True,
-                                 nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -34,7 +23,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
     reviews = relationship("Review", cascade="all, delete", backref="place")
 
-    """place_amenity = Table('place_amenity', Base.metadata,
+    place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id',
                                  String(60),
                                  ForeignKey('places.id'),
@@ -44,11 +33,12 @@ class Place(BaseModel, Base):
                                  String(60),
                                  ForeignKey('amenities.id'),
                                  primary_key=True,
-                                 nullable=False))"""
-	amenities = relationship("Amenity",
+                                 nullable=False))
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+	    amenities = relationship("Amenity",
                                  secondary="place_amenity",
                                  viewonly=False)
-    if getenv("HBNB_TYPE_STORAGE", None) != "db":
+    else:
         @property
         def amenities(self):
             """Get/set linked Amenities."""
