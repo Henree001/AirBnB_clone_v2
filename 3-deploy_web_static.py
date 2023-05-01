@@ -7,6 +7,7 @@ from datetime import datetime
 
 env.hosts = ['100.26.151.162', '54.86.155.217']
 
+
 def do_pack():
     """Fabric script that generates a .tgx archive"""
     n = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -41,8 +42,7 @@ def do_deploy(archive_path):
 
 def deploy():
     """creates and distributes an archive to your web servers"""
-    result = do_pack()
-    if result is None:
+    archive = do_pack()
+    if archive is None:
         return False
-    result = do_deploy(result)
-    return result
+    return do_deploy(archive)
