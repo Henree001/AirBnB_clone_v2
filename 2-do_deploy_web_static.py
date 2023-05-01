@@ -6,6 +6,7 @@ env.hosts = ['100.26.151.162', '54.86.155.217']
 
 
 def do_deploy(archive_path):
+    """distributes an archive to web servers"""
     if os.path.exists(archive_path) is False:
         return False
     file_name = os.path.basename(archive_path)
