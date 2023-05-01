@@ -5,6 +5,7 @@ from fabric.api import run, env, put, local
 import os
 from datetime import datetime
 
+env.hosts = ['100.26.151.162', '54.86.155.217']
 
 def do_pack():
     """Fabric script that generates a .tgx archive"""
@@ -15,9 +16,6 @@ def do_pack():
     except Exception:
         return None
     return 'versions/web_static_{}'.format(n)
-
-
-env.hosts = ['100.26.151.162', '54.86.155.217']
 
 
 def do_deploy(archive_path):
@@ -35,7 +33,7 @@ def do_deploy(archive_path):
         run('sudo mv -f {}web_static/* {}'.format(folder_path, folder_path))
         run("sudo rm -rf {}web_static".format(folder_path))
         run('sudo rm -rf /data/web_static/current')
-        run('sudo ln -s {} /data/web_static/current'.format(folder_path))
+        run('sudo ln -sf {} /data/web_static/current'.format(folder_path))
     except Exception:
         return False
     return True
