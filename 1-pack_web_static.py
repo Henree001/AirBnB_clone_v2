@@ -12,4 +12,4 @@ def do_pack():
         local("tar -cvzf versions/web_static_{}.tgz web_static".format(n))
     except Exception:
         return None
-    return 'versions/web_static_{}'.format(n)
+    return 'versions/web_static_{}.tgz'.format(n)
