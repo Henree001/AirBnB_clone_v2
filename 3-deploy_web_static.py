@@ -34,7 +34,7 @@ def do_deploy(archive_path):
         run('sudo mv -f {}web_static/* {}'.format(folder_path, folder_path))
         run("sudo rm -rf {}web_static".format(folder_path))
         run('sudo rm -rf /data/web_static/current')
-        run('sudo ln -sf {} /data/web_static/current'.format(folder_path))
+        run('sudo ln -s {} /data/web_static/current'.format(folder_path))
     except Exception:
         return False
     return True
