@@ -5,6 +5,7 @@ from sqlalchemy import String, Column, ForeignKey, Float, Integer, Table
 from sqlalchemy.orm import relationship
 from os import getenv
 from models.amenity import Amenity
+from models.review import Review
 
 place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id',
@@ -33,12 +34,11 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
     reviews = relationship("Review", cascade="all, delete", backref="place")
+	amenities = relationship("Amenity",
+                             secondary="place_amenity",
+                             viewonly=False)
 
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-	    amenities = relationship("Amenity",
-                                 secondary="place_amenity",
-                                 viewonly=False)
-    else:
+    if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def amenities(self):
             """Get/set linked Amenities."""
@@ -53,6 +53,7 @@ class Place(BaseModel, Base):
             if type(value) == Amenity:
                 self.amenity_ids.append(value.id)
 
+        @property
         def reviews(self):
             """Reviews getter for class attribute reviews"""
             reviews = models.storage.all(models.Review)
