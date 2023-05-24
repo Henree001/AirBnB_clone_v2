@@ -76,6 +76,7 @@ class Place(BaseModel, Base):
             'Amenity',
             secondary=place_amenity,
             viewonly=False,
+            backref='place_amenities'
         )
     else:
         @property
