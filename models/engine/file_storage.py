@@ -60,10 +60,9 @@ class FileStorage:
         """delete object provided"""
         try:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            if key in self.__objects.keys():
-                del self.__objects[key]
-        #except (AttributeError, KeyError):
-            #pass
+            del self.__objects[key]
+        except (AttributeError, KeyError):
+            pass
 
     def close(self):
         """method for deserializing the JSON file to objects"""
