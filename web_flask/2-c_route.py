@@ -26,7 +26,7 @@ def display_hbnb():
 def display_text(text):
     '''The c page.'''
     new_text = text.replace('_', ' ')
-    return "C {}".format(text)
+    return "C {}".format(new_text)
 
 
 if __name__ == '__main__':
