@@ -12,12 +12,12 @@ from models import storage
 from models.state import State
 
 app = Flask(__name__)
-data = storage.all(State).values()
 
 
 @app.route('/states_list', strict_slashes=False)
 def state_list():
     """displays a HTML page of the list of states"""
+    data = storage.all(State).values()
     return render_template('7-states_list.html', data=data)
 
 

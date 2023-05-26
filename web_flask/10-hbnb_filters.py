@@ -12,13 +12,13 @@ from models.state import State
 from models.amenity import Amenity
 
 app = Flask(__name__)
-states = storage.all(State).values()
-amenities = storage.all(Amenity).values()
 
 
 @app.route('/hbnb_filters', strict_slashes=False)
 def hbnb():
     """display a HTML page like 6-index.html"""
+    states = storage.all(State).values()
+    amenities = storage.all(Amenity).values()
     return render_template('10-hbnb_filters.html', states=states,
                            amenities=amenities)
 
