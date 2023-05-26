@@ -15,16 +15,16 @@ app = Flask(__name__)
 data = storage.all(State).values()
 
 
-@app.teardown_appcontext
-def teardown_session(exception):
-    """Removes the current SQLAlchemy Session after each request"""
-    storage.close()
-
-
 @app.route('/states_list', strict_slashes=False)
 def state_list():
     """displays a HTML page of the list of states"""
     return render_template('7-states_list.html', data=data)
+
+
+@app.teardown_appcontext
+def teardown_session(exception):
+    """Removes the current SQLAlchemy Session after each request"""
+    storage.close()
 
 
 if __name__ == '__main__':

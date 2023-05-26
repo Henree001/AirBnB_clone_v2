@@ -16,17 +16,17 @@ states = storage.all(State).values()
 amenities = storage.all(Amenity).values()
 
 
-@app.teardown_appcontext
-def teardown_session(exception):
-    """Removes the current SQLAlchemy Session after each request"""
-    storage.close()
-
-
 @app.route('/hbnb_filters', strict_slashes=False)
 def hbnb():
     """display a HTML page like 6-index.html"""
     return render_template('10-hbnb_filters.html', states=states,
                            amenities=amenities)
+
+
+@app.teardown_appcontext
+def teardown_session(exception):
+    """Removes the current SQLAlchemy Session after each request"""
+    storage.close()
 
 
 if __name__ == '__main__':
