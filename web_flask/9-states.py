@@ -18,7 +18,13 @@ app = Flask(__name__)
 def state_list(id=None):
     """displays a HTML page of the list of states"""
     data = storage.all(State).values()
-    return render_template('9-states.html', data=data, id=id)
+    if id is not None:
+        for state in data:
+            if state.id == id:
+                return render_template('9-states.html', state=state)
+        return render_template('9-states.html')
+    
+    return render_template('9-states.html', data=data)
 
 
 @app.teardown_appcontext
