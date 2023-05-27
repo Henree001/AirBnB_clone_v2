@@ -23,7 +23,6 @@ def state_list(id=None):
             if state.id == id:
                 return render_template('9-states.html', state=state)
         return render_template('9-states.html')
-  
     return render_template('9-states.html', data=data)
 
 
