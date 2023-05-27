@@ -17,13 +17,13 @@ app = Flask(__name__)
 @app.route('/states/<id>', strict_slashes=False)
 def state_list(id=None):
     """displays a HTML page of the list of states"""
-    data = storage.all(State).values()
+    data = storage.all(State)
     if id is not None:
-        for state in data:
+        for state in data.values():
             if state.id == id:
                 return render_template('9-states.html', state=state)
         return render_template('9-states.html')
-    
+  
     return render_template('9-states.html', data=data)
 
 
