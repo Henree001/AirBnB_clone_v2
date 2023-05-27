@@ -12,7 +12,7 @@
                 <li>{{ city.id }}: <B>{{ city.name }}</B></li>
                 {% endfor %}
             </ul>
-        {% elif data is mapping %}
+        {% elif data %}
             <h1>States</h1>
             <ul>
                 {% for state in data|sort(attribute='name') %}
